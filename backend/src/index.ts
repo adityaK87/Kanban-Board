@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import authRouter from "./routes/auth";
 import * as dotenv from "dotenv";
 import listRouter from "./routes/list";
@@ -9,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-console.log(process.env.JWT_SECRET);
+app.use(cors());
 
 app.use("/api/v1", authRouter);
 app.use("/api/v1", isAuthenticated, listRouter);
