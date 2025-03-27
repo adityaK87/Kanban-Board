@@ -44,6 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			);
 
 			localStorage.setItem("token", res.data?.token);
+			localStorage.setItem("user", JSON.stringify(res.data?.user));
 			toast.success("Login successful");
 		} catch (error) {
 			toast.error("Failed to login");
