@@ -1,5 +1,15 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 function App() {
-	return <div className="bg-red-500 text-green-700"> Hello world!</div>;
+	return (
+		<>
+			<BrowserRouter>
+				<Routes>
+					<Route></Route>
+				</Routes>
+			</BrowserRouter>
+		</>
+	);
 }
 
 export default App;
