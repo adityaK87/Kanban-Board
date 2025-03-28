@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import authRouter from "./routes/auth";
 import * as dotenv from "dotenv";
-import listRouter from "./routes/list";
-import taskRouter from "./routes/task";
+import listRouter from "./routes/column";
+import taskRouter from "./routes/card";
 import { isAuthenticated } from "./middlewares/auth";
 dotenv.config();
 

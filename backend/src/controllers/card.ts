@@ -1,22 +1,22 @@
 import type { Response, Request } from "express";
 import { prismaClient } from "../prisma";
 
-export const getAllTasks = async (req: Request, res: Response) => {
+export const getAllCards = async (req: Request, res: Response) => {
 	try {
-		const listId = req.params.listId;
+		const columnId = req.params.columnId;
 
-		const tasks = await prismaClient.task.findMany({
-			where: { listId },
+		const cards = await prismaClient.card.findMany({
+			where: { columnId },
 			orderBy: { dueDate: "asc" },
 		});
 
-		if (!tasks) {
+		if (!cards) {
 			res.status(404).json({
 				message: "List not found or unauthorized",
 			});
 			return;
 		}
-		res.status(200).json({ tasks });
+		res.status(200).json({ cards });
 	} catch (error) {
 		res.status(500).json({
 			message: "Internal Server Error",
@@ -24,29 +24,29 @@ export const getAllTasks = async (req: Request, res: Response) => {
 	}
 };
 
-export const createTask = async (req: Request, res: Response) => {
+export const createCard = async (req: Request, res: Response) => {
 	try {
 		const { title, description, dueDate, priority } = req.body;
-		const listId = req.params.listId;
+		const columnId = req.params.columnId;
 
-		if (!listId || !title) {
+		if (!columnId || !title) {
 			res.status(400).json({
 				message: "Title and listId are required",
 			});
 			return;
 		}
 
-		const newtask = await prismaClient.task.create({
+		const newCard = await prismaClient.card.create({
 			data: {
 				title,
 				description,
-				listId,
+				columnId,
 				dueDate,
 				priority,
 			},
 		});
 
-		if (!newtask) {
+		if (!newCard) {
 			res.status(404).json({
 				message: "List not found or unauthorized",
 			});
@@ -54,7 +54,7 @@ export const createTask = async (req: Request, res: Response) => {
 		}
 		res.status(200).json({
 			message: "Task created successfully",
-			newtask,
+			newCard,
 		});
 	} catch (error) {
 		res.status(500).json({
@@ -64,21 +64,21 @@ export const createTask = async (req: Request, res: Response) => {
 	}
 };
 
-export const updateTask = async (req: Request, res: Response) => {
+export const updateCard = async (req: Request, res: Response) => {
 	try {
-		const taskId = req.params.taskId;
+		const cardId = req.params.cardId;
 		const { title, description, dueDate, priority } = req.body;
 
-		if (!taskId) {
+		if (!cardId) {
 			res.status(404).json({
-				message: "Task Id is required!",
+				message: "Card Id is required!",
 			});
 			return;
 		}
 
-		const updatedTask = await prismaClient.task.update({
+		const updatedCard = await prismaClient.card.update({
 			where: {
-				id: taskId,
+				id: cardId,
 			},
 			data: {
 				title,
@@ -88,7 +88,7 @@ export const updateTask = async (req: Request, res: Response) => {
 			},
 		});
 
-		if (!updateTask) {
+		if (!updatedCard) {
 			res.status(404).json({
 				message: "Task id is not Valid!",
 			});
@@ -97,7 +97,7 @@ export const updateTask = async (req: Request, res: Response) => {
 
 		res.status(200).json({
 			message: "Task updated successfully",
-			task: updatedTask,
+			task: updatedCard,
 		});
 	} catch (error) {
 		res.status(500).json({
@@ -106,20 +106,20 @@ export const updateTask = async (req: Request, res: Response) => {
 	}
 };
 
-export const deleteTask = async (req: Request, res: Response) => {
+export const deleteCard = async (req: Request, res: Response) => {
 	try {
-		const taskId = req.params.taskId;
+		const cardId = req.params.cardId;
 
-		if (!taskId) {
+		if (!cardId) {
 			res.status(404).json({
-				message: "Task Id is required!",
+				message: "Card Id is required!",
 			});
 			return;
 		}
 
-		await prismaClient.task.delete({ where: { id: taskId } });
+		await prismaClient.card.delete({ where: { id: cardId } });
 		res.status(200).json({
-			message: "Task deleted successfully",
+			message: "Card deleted successfully",
 		});
 	} catch (error) {
 		res.status(500).json({
