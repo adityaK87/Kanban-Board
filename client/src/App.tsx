@@ -6,6 +6,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import NotFound from "@/pages/NotFound";
+import Dashboard from "@/pages/Dashboard";
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 					<Route path="/" element={<Index />}></Route>
 					<Route path="/login" element={<Login />}></Route>
 					<Route path="/register" element={<Register />}></Route>
+					<Route path="/dashboard" element={<Dashboard />}></Route>
 					<Route path="*" element={<NotFound />}></Route>
 				</Routes>
 			</BrowserRouter>
