@@ -127,3 +127,40 @@ export const deleteCard = async (req: Request, res: Response) => {
 		});
 	}
 };
+
+export const moveCard = async (req: Request, res: Response) => {
+	try {
+		const cardId = req.params.cardId;
+		const newColumnId = req.params.toColumnId;
+
+		if (!newColumnId) {
+			res.status(400).json({
+				message: "newColumnId is required",
+			});
+			return;
+		}
+		const existingTask = await prismaClient.card.findUnique({
+			where: { id: cardId },
+			include: { column: true }, // Include the current list details
+		});
+
+		if (!existingTask) {
+			res.status(404).json({ message: "Task not found" });
+			return;
+		}
+
+		const updatedCard = await prismaClient.card.update({
+			where: { id: cardId },
+			data: { columnId: newColumnId },
+		});
+
+		res.status(200).json({
+			message: "Card moved successfully",
+			card: updatedCard,
+		});
+	} catch (error) {
+		res.status(500).json({
+			message: "Internal Server Error",
+		});
+	}
+};
