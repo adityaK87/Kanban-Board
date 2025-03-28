@@ -10,7 +10,12 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-app.use(cors());
+app.use(
+	cors({
+		methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+		allowedHeaders: ["Content-Type", "Authorization"],
+	})
+);
 
 app.use("/api/v1", authRouter);
 app.use("/api/v1", isAuthenticated, listRouter);
