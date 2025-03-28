@@ -32,7 +32,7 @@ export const isAuthenticated = (
 			next();
 		}
 	} catch (error) {
-		res.send(403).json({
+		res.status(403).json({
 			message: "Invalid token",
 		});
 	}

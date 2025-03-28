@@ -54,7 +54,7 @@ export const deleteColumn = async (req: Request, res: Response) => {
 	try {
 		const columnId = req.params.columnId;
 		const userId = req.userId;
-		await prismaClient.column.delete({
+		const deletedColumn = await prismaClient.column.delete({
 			where: {
 				userId,
 				id: columnId,
@@ -63,6 +63,7 @@ export const deleteColumn = async (req: Request, res: Response) => {
 
 		res.status(200).json({
 			message: "List deleted successfully",
+			deleteColumnId: deletedColumn.id,
 		});
 	} catch (error) {
 		res.status(500).json({

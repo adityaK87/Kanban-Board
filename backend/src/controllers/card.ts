@@ -97,7 +97,7 @@ export const updateCard = async (req: Request, res: Response) => {
 
 		res.status(200).json({
 			message: "Task updated successfully",
-			task: updatedCard,
+			card: updatedCard,
 		});
 	} catch (error) {
 		res.status(500).json({
