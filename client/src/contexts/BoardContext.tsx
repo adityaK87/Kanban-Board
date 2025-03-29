@@ -16,14 +16,11 @@ interface BoardContextType {
 	addColumn: (title: string) => void;
 	updateColumn: (columnId: string, title: string) => void;
 	deleteColumn: (columnId: string) => void;
-	addCard: (
-		columnId: string,
-		card: Omit<Card, "id" | "createdAt" | "updatedAt">
-	) => void;
+	addCard: (columnId: string, card: Omit<Card, "id" | "columnId">) => void;
 	updateCard: (
 		columnId: string,
 		cardId: string,
-		card: Partial<Omit<Card, "id" | "createdAt" | "updatedAt">>
+		card: Partial<Omit<Card, "id">>
 	) => void;
 	deleteCard: (columnId: string, cardId: string) => void;
 	moveCard: (
@@ -97,7 +94,10 @@ export function BoardProvider({ children }: { children: ReactNode }) {
 		);
 	}, []);
 
-	const addCard = async (columnId: string, card: Omit<Card, "id">) => {
+	const addCard = async (
+		columnId: string,
+		card: Omit<Card, "id" | "columnId">
+	) => {
 		const { data } = await axios.post(
 			`${import.meta.env.VITE_BACKEND_URL}/${columnId}/cards`,
 			{

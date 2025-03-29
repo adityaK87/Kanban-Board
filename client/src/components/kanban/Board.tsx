@@ -8,7 +8,7 @@ import { Plus } from "lucide-react";
 export function Board() {
 	const { board, moveCard } = useBoard();
 	const [isAddColumnDialogOpen, setIsAddColumnDialogOpen] = useState(false);
-	const [dragInfo, setDragInfo] = useState<{
+	const [, setDragInfo] = useState<{
 		columnId: string;
 		cardId: string;
 	} | null>(null);
