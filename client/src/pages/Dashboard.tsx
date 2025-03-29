@@ -26,10 +26,6 @@ const Dashboard = () => {
 		);
 	}
 
-	if (!user) {
-		return null;
-	}
-
 	return (
 		<BoardProvider>
 			<div className="flex flex-col min-h-screen">
