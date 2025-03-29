@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 80",
+    "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -20,6 +20,7 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@tailwindcss/postcss": "^4.0.17",
     "@use-gesture/react": "^10.3.1",
+    "autoprefixer": "^10.4.21",
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
