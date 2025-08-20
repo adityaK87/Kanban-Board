@@ -17,6 +17,11 @@ app.use(
 	})
 );
 
+app.get("/test", (req, res) => {
+	res.status(200).json({
+		message: "This route is just for testing purpose",
+	});
+});
 app.use("/api/v1", authRouter);
 app.use("/api/v1", isAuthenticated, listRouter);
 app.use("/api/v1", isAuthenticated, taskRouter);
