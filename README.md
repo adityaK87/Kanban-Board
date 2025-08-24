@@ -39,7 +39,7 @@ A **full-stack Kanban Board application** built with **React (Vite), Express.js,
 
 ---
 
-## **💻 Setup Instructions**
+## **💻 Manual Setup Instructions**
 
 ### **1️⃣ Clone the Repository**
 
@@ -80,8 +80,66 @@ bun install
 bun dev
 ```
 
+## **💻 Docker Setup Instructions**
+
+### install docker on your machine
+
+### create a network
+
+    ```sh
+     docker network create kanban_project
+    ```
+
+### start postgres using docker ->
+
+    ```sh
+         docker run --network kanban_project --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
+    ```
+
+### build the docker image for backend
+
+    ```sh
+     docker build --network=host -f ./docker/Dockerfile.backend -t kanban-backend ./backend
+    ```
+
+### start the backend container image
+
+    ```sh
+    docker run -e DATABASE_URL=postgresql://postgres:mysecretpassword@postgres:5432/postgres -p 3000:3000 --network kanban_project kanban-backend
+    ```
+
+### build the docker image for frontend
+
+    ```sh
+     docker build --network=host -f ./docker/Dockerfile.client -t kanban-client ./client
+    ```
+
+### start the client container image
+
+    ```sh
+    docker run -e VITE_BACKEND_URL=localhost:3000/api/v1 -p 3000:3000 --network kanban_project kanban-client
+    ```
+
+## **Docker compose**
+
+### Clone the repo
+
+```sh
+git clone https://github.com/adityaK87/Kanban-Board.git
+cd kanban-board
+```
+
+```sh
+cd Kanban-Board
+docker compose -f docker/docker-compose.yml up
+```
+
 Backend runs on [**http://localhost:3000**](http://localhost:3000) and frontend on [**http://localhost:5173**](http://localhost:5173).
 
 ---
 
 **Made with ❤️ by **[**Aditya**](https://github.com/adityak87)\*\*
+
+```
+
+```

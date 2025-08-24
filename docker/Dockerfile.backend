@@ -2,18 +2,22 @@ FROM oven/bun:1
 
 WORKDIR /app/backend
 
+RUN apt-get update -y && apt-get install -y openssl
+
 COPY package*.json ./
 
 COPY bun.lock ./
 
+COPY prisma ./prisma/
+
 RUN bun install
+
+ENV DATABASE_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres
+ENV JWT_SECRET=""
 
 COPY . .
 
 RUN bunx prisma generate
-
-ENV DATABASE_URL="" \
-    JWT_SECRET=""
 
 EXPOSE 3000
 
